@@ -1,0 +1,8 @@
+Todo:
+   
+ - implement function calls
+ - implement functions with parameters
+ - implement function return values
+ - implement try/catch/finally blocks
+ 
+ - implement parser for GScript
