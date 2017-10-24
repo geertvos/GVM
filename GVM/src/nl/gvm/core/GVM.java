@@ -150,7 +150,7 @@ public class GVM {
 					
 					//Store them for now
 					Value[] params = new Value[paramCount];
-					for( int i=0;i<paramCount;i++)
+					for( int i=paramCount-1;i>=0;i--)
 						params[i] = stack.pop();
 					
 					Value thisval = stack.pop();

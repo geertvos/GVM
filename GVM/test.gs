@@ -1,38 +1,26 @@
-print( false );
-print( !true);
+print("This test shows if all basic arithmatic works,");
 
-if( true ) {
-	print("If works");
+var test = function(expression, message) {
+	if (expression) {
+		print(message+" works.");
+	} else {
+		print(message+" fails!");
 	}
-else {
-	print("If fails");
-}
+	return;
+};
 
-if(!true ) {
-	print("if fails");
-} else {
-	print("else works");
-}
-
-if( 1 < 2 )
-	print(" < works");
-if( 3 > 2 )
-	print(" > works");
-if( 1 <= 2 )
-	print(" <= works");
-if( 3 >= 2 )
-	print(" >= works");
-if( 3 == 3 )
-	print(" == works");
-if( 3 != 3 )
-	print(" != works");
-if( true==true )
-	print(" == works");
-if( true!=false )
-	print(" != works");
-if( 1+1==2 ) print ("+ operator works");
-if( 1-1==0 ) print ("- operator works");
-if( 1*2==2 ) print ("* operator works");
+test( true , "const true");
+test( !false, "operator !");
+test( 1<2 , "operator <");
+test( 3>2 , "operator >");
+test( 3>=2 , "operator >=");
+test( 1<=2 , "operator =>");
+test( 2==2 , "operator ==");
+test( 3!=2 , "operator !=");
+test( 1+1==2 , "operator +");
+test( 3-1==2 , "operator -");
+test( 2*2==4 , "operator *");
+test( "a"=="a" , "operator ==");
 
 try {
  	var s = 1/0;
