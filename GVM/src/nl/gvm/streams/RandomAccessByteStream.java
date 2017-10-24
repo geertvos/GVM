@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 public class RandomAccessByteStream {
 
-	private int blocksize = 512;
-
-	private List<byte[]> buffers = new Vector<byte[]>();
+	private final int blocksize;
+	private final List<byte[]> buffers = new ArrayList<byte[]>();
 	private int size = 0;
 	private int pointer = 0;
 

@@ -1,5 +1,6 @@
 package nl.gvm.compiler.ast.expressions;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -10,7 +11,7 @@ import nl.gvm.program.NativeMethodWrapper;
 public class NativeFunctionCallExpression extends Expression {
 
 	private int identifier;
-	private List<Expression> parameters = new Vector<Expression>();
+	private List<Expression> parameters = new ArrayList<Expression>();
 	private NativeMethodWrapper method;
 	
 	public NativeFunctionCallExpression( NativeMethodWrapper nmw , List<Expression> parameters )

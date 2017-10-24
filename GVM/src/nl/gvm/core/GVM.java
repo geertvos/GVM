@@ -146,7 +146,7 @@ public class GVM {
 					function = arg.getValue();
 					GVMFunction fstruct = program.getFunction(function);
 					//Obtain the number of parameters
-					int paramCount = fstruct.parameters.size() ;
+					int paramCount = fstruct.getParameters().size() ;
 					
 					//Store them for now
 					Value[] params = new Value[paramCount];
@@ -187,7 +187,7 @@ public class GVM {
 						stack.pop();
 					
 					//Pop arguments
-					int paramCount = program.getFunction(function).parameters.size() ;
+					int paramCount = program.getFunction(function).getParameters().size() ;
 					for( int i=0;i<paramCount;i++)
 						stack.pop();
 
@@ -237,8 +237,8 @@ public class GVM {
 				}
 				else if( arg1.getType()==Value.TYPE.STRING && arg2.getType()==Value.TYPE.STRING)
 				{
-					int val = program.addString(program.getString(arg1.getValue())+program.getString(arg2.getValue()));
-					Value returnValue = new Value(val,Value.TYPE.NUMBER);
+					int val = program.addString(program.getString(arg2.getValue())+program.getString(arg1.getValue()));
+					Value returnValue = new Value(val,Value.TYPE.STRING);
 					stack.push(returnValue);
 				}
 				else handleException("Incompatible types cannot be added!");

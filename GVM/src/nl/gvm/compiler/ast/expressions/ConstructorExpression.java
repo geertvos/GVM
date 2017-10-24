@@ -4,7 +4,7 @@ import nl.gvm.compiler.GCompiler;
 
 public class ConstructorExpression extends Expression {
 
-	private FunctionCallExpression function;
+	private final FunctionCallExpression function;
 	
 	public ConstructorExpression( FunctionCallExpression function )
 	{

@@ -5,7 +5,7 @@ import nl.gvm.compiler.GCompiler;
 
 public class VariableExpression extends Expression implements FieldReferenceExpression {
 
-	private String name;
+	private final String name;
 	private Expression field;
 	
 	/**
@@ -36,20 +36,18 @@ public class VariableExpression extends Expression implements FieldReferenceExpr
 	}
 	
 	public void compile(GCompiler c) {
-		if( c.function.parameters.contains(name) && field==null )
+		if( c.getFunction().getParameters().contains(name) && field==null )
 		{
 			//Variable points to a parameter
 			c.code.add(GVM.LDS);
-			c.code.writeInt(1+c.function.parameters.indexOf(name)); 
-		} else if( c.function.getLocals().contains(name) && field==null ) {
+			c.code.writeInt(1+c.getFunction().getParameters().indexOf(name)); 
+		} else if( c.getFunction().getLocals().contains(name) && field==null ) {
 			//Variable points to a local variable
 			c.code.add(GVM.LDS);
-			c.code.writeInt(1+c.function.parameters.size()+c.function.getLocals().indexOf(name)); 
+			c.code.writeInt(1+c.getFunction().getParameters().size()+c.getFunction().getLocals().indexOf(name)); 
 		} else {
 			//Variable points to a field of this
-			if( !c.varNamesConstants.contains(name))
-				c.varNamesConstants.add(name);
-			int index = c.varNamesConstants.indexOf(name);
+			int index = c.registerVariable(name);
 			if( field!=null )
 				field.compile(c);
 			else {

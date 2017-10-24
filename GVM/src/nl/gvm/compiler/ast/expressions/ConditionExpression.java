@@ -5,9 +5,9 @@ import nl.gvm.core.GVM;
 
 public class ConditionExpression extends Expression {
 
-	private Expression condition;
-	private Expression trueVal;
-	private Expression falseVal;
+	private final Expression condition;
+	private final Expression trueVal;
+	private final Expression falseVal;
 
 	public ConditionExpression( Expression condition , Expression trueVal, Expression falseVal )
 	{

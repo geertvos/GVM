@@ -23,13 +23,13 @@ public class TryCatchBlock extends Statement {
 		c.code.add(GVM.JMP);
 		int endofTry = c.code.getPointerPosition();
 		c.code.writeInt(0);//Set to end of catch
-		c.function.registerLocalVariable(variableName);
+		c.getFunction().registerLocalVariable(variableName);
 		c.code.add(GVM.LDS);
-		c.code.writeInt(1+c.function.parameters.size()+c.function.getLocals().indexOf(variableName));
+		c.code.writeInt(1+c.getFunction().getParameters().size()+c.getFunction().getLocals().indexOf(variableName));
 		c.code.add(GVM.PUT);
 		catchBlock.compile(c);
 		c.code.set(endofTry, c.code.getPointerPosition());
-		c.function.registerCatchBlock(startIndex, endofTry-1, endofTry+4);
+		c.getFunction().registerCatchBlock(startIndex, endofTry-1, endofTry+4);
 	}
 
 }

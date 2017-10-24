@@ -9,8 +9,8 @@ import nl.gvm.streams.RandomAccessByteStream;
 
 public class FunctionDefExpression extends Expression {
 
-	private List<Statement> statements;
-	private List<String> parameters;
+	private final List<Statement> statements;
+	private final List<String> parameters;
 	
 	public FunctionDefExpression( List<String> parameters , List<Statement> stats )
 	{
@@ -21,21 +21,20 @@ public class FunctionDefExpression extends Expression {
 	@Override
 	public void compile(GCompiler c) {
 		RandomAccessByteStream code = c.code;
-		GVMFunction prev = c.function;
+		GVMFunction prev = c.getFunction();
 		
 		RandomAccessByteStream fcode = new RandomAccessByteStream();
 		GVMFunction function = new GVMFunction( fcode, parameters);
-		c.function = function;
+		c.setFunction(function);
 		c.code = fcode;
 		
-		c.program.add(function);
-		int index = c.program.getFunctionIndex(function);
+		int index = c.getProgram().addFunction(function);
 		for( Statement s : statements )
 		{
 			s.compile(c);
 		}
 		c.code = code;
-		c.function = prev;
+		c.setFunction(prev);
 		c.code.add( GVM.LDC_F );
 		c.code.writeInt( index );
 		

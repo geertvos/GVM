@@ -1,6 +1,7 @@
 package nl.gvm.core;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The GVMObject represents an object created by the virtual machine and is always placed on the heap. The stack may contain references to an object.
@@ -10,7 +11,7 @@ import java.util.HashMap;
  */
 public class GVMObject {
 
-	private HashMap<Integer,Value> data = new HashMap<Integer, Value>();
+	private final Map<Integer,Value> data = new HashMap<Integer, Value>();
 	
 	/**
 	 * Set a value in this object

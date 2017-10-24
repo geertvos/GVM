@@ -1,5 +1,6 @@
 package nl.gvm.compiler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -18,12 +19,12 @@ import nl.gvm.streams.RandomAccessByteStream;
  */
 public class GCompiler {
 
-	public List<String> stringConstants = new Vector<String>();
-	public List<String> varNamesConstants = new Vector<String>();
+	private List<String> stringConstants = new ArrayList<>();
+	private List<String> varNamesConstants = new ArrayList<>();
 	public RandomAccessByteStream code;
-	public GVMFunction function;
-	public GVMProgram program;
-	public List<NativeMethodWrapper> natives = new Vector<NativeMethodWrapper>();
+	private GVMFunction function;
+	private GVMProgram program;
+	public List<NativeMethodWrapper> natives = new ArrayList<>();
 	
 	public GVMProgram compile(List<Statement> compilables)
 	{
@@ -48,6 +49,29 @@ public class GCompiler {
 		
 	}
 	
+	public int registerString(String stringConstant) {
+		if(!stringConstants.contains(stringConstant)) {
+			stringConstants.add(stringConstant);
+		}
+		return stringConstants.indexOf(stringConstant);
+	}
 	
+	public int registerVariable(String svariableName) {
+		if(!varNamesConstants.contains(svariableName)) {
+			varNamesConstants.add(svariableName);
+		}
+		return varNamesConstants.indexOf(svariableName);
+	}
 	
+	public GVMFunction getFunction() {
+		return function;
+	}
+	
+	public void setFunction(GVMFunction function) {
+		this.function = function;
+	}
+	
+	public GVMProgram getProgram() {
+		return program;
+	}
 }

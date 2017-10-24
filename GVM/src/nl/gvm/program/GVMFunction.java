@@ -1,7 +1,7 @@
 package nl.gvm.program;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import nl.gvm.streams.RandomAccessByteStream;
 
@@ -13,16 +13,15 @@ import nl.gvm.streams.RandomAccessByteStream;
 public class GVMFunction {
 
 	private RandomAccessByteStream bytecode;
-	public List<String> parameters;
-	private List<String> locals;
-	private List<ExceptionHandler> exceptionHandlers = new Vector<GVMFunction.ExceptionHandler>();
+	private final List<String> parameters;
+	private final List<String> locals  = new ArrayList<String>();
+	private final List<ExceptionHandler> exceptionHandlers = new ArrayList<GVMFunction.ExceptionHandler>();
 	
 	
 	public GVMFunction( RandomAccessByteStream code , List<String> parameters  )
 	{
 		this.bytecode = code;
 		this.parameters = parameters;
-		this.locals = new Vector<String>();
 	}
 
 	public RandomAccessByteStream getBytecode() {
@@ -84,6 +83,10 @@ public class GVMFunction {
 			this.tryend = tryend;
 			this.catchstart = catchstart;
 		}
+	}
+	
+	public List<String> getParameters() {
+		return parameters;
 	}
 	
 }

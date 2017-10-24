@@ -18,9 +18,14 @@ import org.antlr.runtime.RecognitionException;
 public class GVMTest {
 
 	public static void main(String[] args) throws IOException, RecognitionException {
-
+		String filename = "";
+		if(args.length == 1) {
+			filename = args[0];
+		} else {
+			System.out.println("Please specify file name.");
+		}
 		GScriptASTRewriter parser = new GScriptASTRewriter();
-		InputStream is = new FileInputStream(new File("exceptions.gs"));
+		InputStream is = new FileInputStream(new File(filename));
 		List<Statement> statements = parser.parse(is);
 		GCompiler compiler = new GCompiler();
 		GVMProgram p = compiler.compile(statements);

@@ -24,7 +24,7 @@ public class VariableDeclarationStatement extends Statement {
 
 	@Override
 	public void compile(GCompiler c) {
-		c.function.registerLocalVariable(name);
+		c.getFunction().registerLocalVariable(name);
 		//Variable points to a parameter
 		if( value!=null){
 			Expression as = new AssignmentExpression(new VariableExpression(name), value);

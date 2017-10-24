@@ -33,4 +33,12 @@ if( true!=false )
 if( 1+1==2 ) print ("+ operator works");
 if( 1-1==0 ) print ("- operator works");
 if( 1*2==2 ) print ("* operator works");
+
+try {
+ 	var s = 1/0;
+	print("Exceptions fail.");
+} catch(e) {
+	print("Exceptions work, caught a: "+e);
+}
+print("string "+"concat works");
 print("done");

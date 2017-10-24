@@ -9,8 +9,7 @@ import nl.gvm.core.Value;
 public class NativePrintMethod extends NativeMethodWrapper {
 
 	@Override
-	public Value invoke(List<Value> arguments, Map<Integer, GVMObject> heap,
-			List<String> strings) {
+	public Value invoke(List<Value> arguments, Map<Integer, GVMObject> heap, List<String> strings) {
 		Value v = arguments.get(0);
 		if( v.getType() == Value.TYPE.STRING )
 			System.out.println(strings.get(v.getValue()));

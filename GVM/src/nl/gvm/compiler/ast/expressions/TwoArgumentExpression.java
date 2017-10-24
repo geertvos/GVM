@@ -4,8 +4,8 @@ import nl.gvm.compiler.GCompiler;
 
 public class TwoArgumentExpression extends Expression {
 
-	private Expression lhs;
-	private Expression rhs;
+	private final Expression lhs;
+	private final Expression rhs;
 	
 	
 	public TwoArgumentExpression( Expression lhs , Expression rhs )

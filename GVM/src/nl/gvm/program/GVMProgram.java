@@ -1,4 +1,5 @@
 package nl.gvm.program;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -10,10 +11,10 @@ import java.util.Vector;
  */
 public class GVMProgram {
 
-	private List<GVMFunction> functions = new Vector<GVMFunction>();
-	private List<String> stringConstants = new Vector<String>();
-	private List<NativeMethodWrapper> nativeWrappers = new Vector<NativeMethodWrapper>();
-	private String name;
+	private final List<GVMFunction> functions = new ArrayList<GVMFunction>();
+	private List<String> stringConstants = new ArrayList<String>();
+	private List<NativeMethodWrapper> nativeWrappers = new ArrayList<NativeMethodWrapper>();
+	private final String name;
 	
 	public GVMProgram( String name )
 	{
@@ -83,8 +84,9 @@ public class GVMProgram {
 		return stringConstants;
 	}
 
-	public void addFunction(GVMFunction function) {
+	public int addFunction(GVMFunction function) {
 		functions.add(function);
+		return functions.indexOf(function);
 	}
 	
 	public int getFunctionIndex( GVMFunction function )

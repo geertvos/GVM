@@ -1,5 +1,6 @@
 package nl.gvm.compiler.ast.expressions;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import nl.gvm.compiler.GCompiler;
@@ -7,8 +8,8 @@ import nl.gvm.core.GVM;
 
 public class FunctionCallExpression extends Expression implements FieldReferenceExpression{
 
-	private FieldReferenceExpression function;
-	private List<Expression> parameters = new Vector<Expression>();
+	private final FieldReferenceExpression function;
+	private List<Expression> parameters = new ArrayList<>();
 	private Expression field;
 
 	

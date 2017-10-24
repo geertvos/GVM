@@ -5,8 +5,8 @@ import nl.gvm.core.GVM;
 
 public class AssignmentExpression extends Expression {
 
-	private Expression value;
-	private Expression variable;
+	private final Expression value;
+	private final Expression variable;
 
 	/**
 	 * Assign a value to an existing or non existing variable

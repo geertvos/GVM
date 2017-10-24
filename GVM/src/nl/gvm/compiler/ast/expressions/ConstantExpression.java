@@ -7,7 +7,7 @@ import nl.gvm.core.Value.TYPE;
 
 public class ConstantExpression extends Expression {
 
-	private Value.TYPE type;
+	private final Value.TYPE type;
 	private int value;
 	private String string;
 	
@@ -48,9 +48,7 @@ public class ConstantExpression extends Expression {
 		if (type == Value.TYPE.STRING)
 		{
 			c.code.add( GVM.LDC_S);
-			if( !c.stringConstants.contains(string) )
-				c.stringConstants.add(string);
-			c.code.writeInt( c.stringConstants.indexOf(string));
+			c.code.writeInt( c.registerString(string));
 			return;
 		}
 		if (type == Value.TYPE.UNDEFINED)
