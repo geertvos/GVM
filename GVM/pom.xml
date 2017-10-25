@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>net.geertvos.gvm</groupId>
-	<artifactId>gvm-vm</artifactId>
+	<groupId>nl.gvm</groupId>
+	<artifactId>gvm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Geert Virtual Machine</name>
 	<description>Basic VM and compiler for a JS like functional language</description>
@@ -43,7 +43,7 @@
           </descriptorRefs>
           <archive>
             <manifest>
-              <mainClass>GVMTest</mainClass>     // specify your main class here
+              <mainClass>nl.gvm.main.GVMTest</mainClass>     // specify your main class here
             </manifest>
           </archive>
         </configuration>

@@ -14,14 +14,12 @@ public class NativeFunctionCallExpression extends Expression {
 	private List<Expression> parameters = new ArrayList<Expression>();
 	private NativeMethodWrapper method;
 	
-	public NativeFunctionCallExpression( NativeMethodWrapper nmw , List<Expression> parameters )
-	{
+	public NativeFunctionCallExpression( NativeMethodWrapper nmw , List<Expression> parameters ) {
 		this.method = nmw;
 		this.parameters = parameters;
 	}
 	
-	public NativeFunctionCallExpression( int identifier , List<Expression> parameters )
-	{
+	public NativeFunctionCallExpression( int identifier , List<Expression> parameters ) {
 		this.identifier = identifier;
 		this.parameters = parameters;
 	}
@@ -33,14 +31,15 @@ public class NativeFunctionCallExpression extends Expression {
 	@Override
 	public void compile(GCompiler c) {
 		
-		if( method!= null )
-		{
-			if( !c.natives.contains(method))
+		if( method!= null ) {
+			if( !c.natives.contains(method)) {
 				c.natives.add(method);
+			}
 			identifier = c.natives.indexOf(method);
 		}
-		for( Expression e : parameters )
+		for( Expression e : parameters ) {
 			e.compile(c);
+		}
 		c.code.add(GVM.LDC_F);
 		c.code.writeInt(identifier);
 		c.code.add(GVM.NATIVE);

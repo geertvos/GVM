@@ -2,6 +2,7 @@ package nl.gvm.compiler.parser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.util.Vector;
@@ -39,6 +40,7 @@ import nl.gvm.compiler.ast.statements.TryCatchBlock;
 import nl.gvm.compiler.ast.statements.VariableDeclarationStatement;
 import nl.gvm.compiler.ast.statements.WhileStatement;
 import nl.gvm.core.Value.TYPE;
+import nl.gvm.program.NativeMethodAutoWrapper;
 import nl.gvm.program.NativePrintMethod;
 
 import org.antlr.runtime.ANTLRInputStream;
@@ -407,7 +409,7 @@ public class GScriptASTRewriter {
 				 String function = t.getChild(0).getText();
 				 if( function.equals("print") )
 				 {
-					 List<Expression> arguments = new Vector<Expression>();
+					 List<Expression> arguments = new ArrayList<Expression>();
 					 Tree argumentTree = t.getChild(1);
 					 for( int i=0;i<argumentTree.getChildCount();i++)
 					 {
@@ -415,8 +417,17 @@ public class GScriptASTRewriter {
 					 }
 					 return new NativeFunctionCallExpression( new NativePrintMethod(), arguments);
 					 
-				 } else {
-					 List<Expression> arguments = new Vector<Expression>();
+				 } else if( function.equals("native") ) {
+						 List<Expression> arguments = new ArrayList<Expression>();
+						 Tree argumentTree = t.getChild(1);
+						 for( int i=0;i<argumentTree.getChildCount();i++)
+						 {
+							 arguments.add( parseExpression( argumentTree.getChild(i)) );
+						 }
+						 return new NativeFunctionCallExpression( new NativeMethodAutoWrapper(arguments.size()), arguments);
+						 
+			     } else {
+					 List<Expression> arguments = new ArrayList<Expression>();
 					 Tree argumentTree = t.getChild(1);
 					 for( int i=0;i<argumentTree.getChildCount();i++)
 					 {
@@ -427,7 +438,7 @@ public class GScriptASTRewriter {
 				 }
 			 } else if( t.getChildCount() == 3 )
 			 {
-				 List<Expression> arguments = new Vector<Expression>();
+				 List<Expression> arguments = new ArrayList<Expression>();
 				 Tree argumentTree = t.getChild(1);
 				 Expression otherPart = parseExpression(t.getChild(2));
 				 for( int i=0;i<argumentTree.getChildCount();i++)
