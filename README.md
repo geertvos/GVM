@@ -1,7 +1,22 @@
 This is a very minimal compiler and interpreter for a Javascript like functional programming language that is called GScript. 
 
-Inlcude Antlr-3.3-all.jar to make the project compile and run. 
+The language now has support for:
 
-If I have time a pom will be added and the project will be split modules.
+* Primitives (String, Number, Boolean, Object and Function)
+* Basic arithmetic
+* Objects
+* Functions
+* Control flow (while, for, break, continue)
+* Exception handling
+* Native method calling (static with String parameters only)
 
-For now this project is as it was made somewhere around 2010.
+mvn clean install 
+java -jar ./target/gvm-0.0.1-SNAPSHOT-jar-with-dependencies.jar <file>
+  
+To be supported:
+* Named return values
+* Multiple return values
+* Full static method wrapping
+* Full native object wrapping
+* Multi threading
+
