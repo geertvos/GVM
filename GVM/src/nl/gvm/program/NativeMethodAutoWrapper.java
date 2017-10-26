@@ -8,6 +8,7 @@ import java.util.Map;
 
 import nl.gvm.core.GVMObject;
 import nl.gvm.core.Value;
+import nl.gvm.core.Value.TYPE;
 
 public class NativeMethodAutoWrapper extends NativeMethodWrapper{
 
@@ -37,13 +38,23 @@ public class NativeMethodAutoWrapper extends NativeMethodWrapper{
 					}
 				}
 				Method m = theClass.getMethod(method, wrappedTypes);
-				//TODO: wrap other argument
-				//TODO: wrap return values
-				m.invoke(null, wrappedArgs );
-			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-				e.printStackTrace();
+				//TODO: wrap other arguments
+				//TODO: wrap return values of other types
+				Object returnValue = m.invoke(null, wrappedArgs );
+				if(returnValue instanceof String) {
+					String strVal = (String)returnValue;
+					if(!strings.contains(returnValue)) {
+						strings.add(strVal);
+					}
+					int index = strings.indexOf(strVal);
+					return new Value(index, TYPE.STRING);
+				}
+			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException e) {
+				throw new RuntimeException(e);
+			} catch( InvocationTargetException e2 ) {
+				throw new RuntimeException(e2.getTargetException());
 			}
-		return null;
+		return new Value(0,  Value.TYPE.UNDEFINED);
 	}
 	
 	public String getStringArgument(int index, List<Value> arguments, List<String> table) {
@@ -51,7 +62,7 @@ public class NativeMethodAutoWrapper extends NativeMethodWrapper{
 		if( v.getType() == Value.TYPE.STRING ) {
 			return table.get(v.getValue());
 		}
-		throw new IllegalArgumentException();
+		throw new IllegalArgumentException("Value is not a STRING, but a "+v.getType());
 	}
 
 	@Override

@@ -29,6 +29,5 @@ try {
 	print("Exceptions work, caught a: "+e);
 }
 print("string "+"concat works");
+
 print("done");
-native("nl.gvm.main.GVMTest","testMethod");
-native("nl.gvm.main.GVMTest","testMethodString","hello");

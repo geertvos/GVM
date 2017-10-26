@@ -7,6 +7,12 @@ import java.util.List;
 import java.util.Stack;
 import java.util.Vector;
 
+import org.antlr.runtime.ANTLRInputStream;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.tree.CommonTree;
+import org.antlr.runtime.tree.Tree;
+
 import nl.gvm.compiler.ast.expressions.AddOperator;
 import nl.gvm.compiler.ast.expressions.AndExpression;
 import nl.gvm.compiler.ast.expressions.AssignmentExpression;
@@ -41,13 +47,6 @@ import nl.gvm.compiler.ast.statements.VariableDeclarationStatement;
 import nl.gvm.compiler.ast.statements.WhileStatement;
 import nl.gvm.core.Value.TYPE;
 import nl.gvm.program.NativeMethodAutoWrapper;
-import nl.gvm.program.NativePrintMethod;
-
-import org.antlr.runtime.ANTLRInputStream;
-import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.RecognitionException;
-import org.antlr.runtime.tree.CommonTree;
-import org.antlr.runtime.tree.Tree;
 
 public class GScriptASTRewriter {
 	
@@ -407,17 +406,7 @@ public class GScriptASTRewriter {
 			 } else if ( t.getChildCount() == 2 )
 			 {
 				 String function = t.getChild(0).getText();
-				 if( function.equals("print") )
-				 {
-					 List<Expression> arguments = new ArrayList<Expression>();
-					 Tree argumentTree = t.getChild(1);
-					 for( int i=0;i<argumentTree.getChildCount();i++)
-					 {
-						 arguments.add( parseExpression( argumentTree.getChild(i)));
-					 }
-					 return new NativeFunctionCallExpression( new NativePrintMethod(), arguments);
-					 
-				 } else if( function.equals("native") ) {
+				 if( function.equals("native") ) {
 						 List<Expression> arguments = new ArrayList<Expression>();
 						 Tree argumentTree = t.getChild(1);
 						 for( int i=0;i<argumentTree.getChildCount();i++)

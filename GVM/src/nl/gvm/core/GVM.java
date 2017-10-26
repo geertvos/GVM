@@ -1,9 +1,9 @@
 package nl.gvm.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
-import java.util.Vector;
 
 import nl.gvm.core.Value.TYPE;
 import nl.gvm.garbagecollector.GVMBasicGarbageCollector;
@@ -65,7 +65,7 @@ public class GVM {
 		bytecode = new RandomAccessByteStream();
 		bytecode.write( NEW );
 		bytecode.write( LDC_F );
-		bytecode.writeInt(0  );
+		bytecode.writeInt(0);
 		bytecode.write( INVOKE );
 		bytecode.write( HALT );
 		bytecode.seek(0);
@@ -93,7 +93,7 @@ public class GVM {
 			case NEW:
 			{
 				int id = heap.size()+1;
-				heap.put(id, new GVMObject());
+				heap.put(id, new GVMPlainObject());
 				stack.push( new Value(id,Value.TYPE.OBJECT));
 			}
 			break;
@@ -389,11 +389,15 @@ public class GVM {
 					break;
 				}
 				NativeMethodWrapper nmw = program.getNativeWrappers().get( arg.getValue() );
-				List<Value> args = new Vector<Value>();
+				List<Value> args = new ArrayList<Value>();
 				for( int i=0;i<nmw.argumentCount();i++)
 					args.add( stack.pop() );
-				Value returnVal = nmw.invoke( args , heap,program.getStringConstants() );
+				try {
+				Value returnVal = nmw.invoke(args ,heap, program.getStringConstants() );
 				stack.push(returnVal);
+				} catch(Exception e) {
+					handleException(e.getMessage());
+				}
 				this.gc.collect(heap, stack);
 				break;
 			}				

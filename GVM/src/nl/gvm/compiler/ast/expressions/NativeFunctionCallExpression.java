@@ -43,6 +43,7 @@ public class NativeFunctionCallExpression extends Expression {
 		c.code.add(GVM.LDC_F);
 		c.code.writeInt(identifier);
 		c.code.add(GVM.NATIVE);
+		c.code.add(GVM.RETURN);
 	}
 
 }

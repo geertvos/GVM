@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedList;
 import java.util.List;
 
 import nl.gvm.compiler.GCompiler;
@@ -31,26 +32,26 @@ public class GVMTest {
 		System.out.println("> Compiling "+filename);
 		long start = System.currentTimeMillis();
 		GScriptASTRewriter parser = new GScriptASTRewriter();
+		InputStream sys = new FileInputStream(new File("system.gs"));
+		List<Statement> sytem = parser.parse(sys);
+
 		InputStream is = new FileInputStream(new File(filename));
-		List<Statement> statements = parser.parse(is);
+		List<Statement> userStatements = parser.parse(is);
+//		
 		GCompiler compiler = new GCompiler();
-		GVMProgram p = compiler.compile(statements);
+		List<Statement> program = new LinkedList<>();
+		program.addAll(sytem);
+		program.addAll(userStatements);
+		GVMProgram p = compiler.compile(program);
 		long end = System.currentTimeMillis();
 		System.out.println("> Compilation finished. Took "+(end-start)+"ms");
 		System.out.println("> Started VM.");
 		System.out.println("───────────────────────────────────────────");
 		System.out.println();
-		//GVMDebugInfo.displayProgram(p);
+//		GVMDebugInfo.displayProgram(p);
 		GVM vm = new GVM(p);
 		vm.run();
 	}
 
-	public static void testMethod() {
-		System.out.println("Calling a test method through native wrapper.");
-	}
-	
-	public static void testMethodString(String param) {
-		System.out.println("Calling a test method through native wrapper with a param: "+param);
-	}
 	
 }
