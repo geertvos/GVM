@@ -40,7 +40,7 @@ public class GVMTest {
 //		
 		GCompiler compiler = new GCompiler();
 		List<Statement> program = new LinkedList<>();
-		program.addAll(sytem);
+//		program.addAll(sytem);
 		program.addAll(userStatements);
 		GVMProgram p = compiler.compile(program);
 		long end = System.currentTimeMillis();
@@ -48,7 +48,7 @@ public class GVMTest {
 		System.out.println("> Started VM.");
 		System.out.println("───────────────────────────────────────────");
 		System.out.println();
-//		GVMDebugInfo.displayProgram(p);
+		GVMDebugInfo.displayProgram(p);
 		GVM vm = new GVM(p);
 		vm.run();
 	}

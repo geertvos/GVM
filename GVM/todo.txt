@@ -1,4 +1,4 @@
 Todo:
-   
+ - implement just new to create an object  
  - implement multiple return values
  - implement named return values

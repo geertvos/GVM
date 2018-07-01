@@ -103,6 +103,11 @@ public class GVM {
 				stack.push(stack.get(arg));
 			}
 			break;
+			case DUP:
+			{
+				stack.push(stack.get(stack.size()-1));
+			}
+			break;
 			case LDC_N:
 			{
 				int arg = bytecode.readInt();
@@ -465,6 +470,7 @@ public class GVM {
 	//Stack manipulation
 	public static final byte NEW=1; 		//Create an empty object and put reference on the stack
 	public static final byte LDS=2;		//Load value from the stack <pos> and put on top
+	public static final byte DUP=29;	//Duplicate the current top of the stack
 	public static final byte LDF=3;		//Create a reference to function <ID> on the stack
 	public static final byte LDC_N=4;	//Push a number constant on the stack
 	public static final byte LDC_S=5;	//Push a string constant on the stack

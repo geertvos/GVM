@@ -25,6 +25,11 @@ public class GVMDebugInfo {
 		for( GVMFunction f : p.getFunctions() )
 		{
 			System.out.println("Function: "+fnumber);
+			System.out.println("Parameters:");
+			System.out.println(f.getParameters());
+			System.out.println("Locals:");
+			System.out.println(f.getLocals());
+			System.out.println("Bytecode:");
 			displayFunction(System.out, f.getBytecode());
 			System.out.println();
 			fnumber++;
@@ -51,6 +56,11 @@ public class GVMDebugInfo {
 			case GVM.LDS: {
 				int arg = bytecode.readInt();
 				out.println("LDS " + arg);
+			}
+				break;
+			case GVM.DUP: {
+				int arg = bytecode.readInt();
+				out.println("DUP");
 			}
 				break;
 			case GVM.LDC_N: {
