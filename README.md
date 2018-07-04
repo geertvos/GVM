@@ -1,6 +1,13 @@
+### GScript VM ###
+
 This is a very minimal compiler and interpreter for a Javascript like functional programming language that is called GScript. 
 
-### Language support: ###
+The compiler and VM are fully written in Java and provide a working programming language and execution environment.
+
+### History ###
+The source code of this project was written by Geert Vos around 2009. It was rediscovered later and imported into this GitHub repo.  
+
+### Language features: ###
 
 * Primitives (String, Number, Boolean, Object and Function)
 * Basic arithmetic
