@@ -35,7 +35,6 @@ public class GVMPlainObject implements GVMObject {
 		if( data.containsKey(id))
 			return data.get(id);
 		else {
-			System.out.println("Creating new value for field "+id);
 			Value v = new Value(0, Value.TYPE.UNDEFINED);
 			data.put( id , v );
 			return v;

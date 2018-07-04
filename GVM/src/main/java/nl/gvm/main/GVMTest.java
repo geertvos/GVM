@@ -24,11 +24,11 @@ public class GVMTest {
 		if(args.length == 1) {
 			filename = args[0];
 		} else {
+			System.out.println("┌─────────────────────────────────────────┐");
+			System.out.println("│                 GVM v 1.00              │");
+			System.out.println("└─────────────────────────────────────────┘");
 			System.out.println("Please specify file name.");
 		}
-		System.out.println("┌─────────────────────────────────────────┐");
-		System.out.println("│                 GVM v 1.00              │");
-		System.out.println("└─────────────────────────────────────────┘");
 		System.out.println("> Compiling "+filename);
 		long start = System.currentTimeMillis();
 		GScriptASTRewriter parser = new GScriptASTRewriter();
@@ -37,7 +37,7 @@ public class GVMTest {
 
 		InputStream is = new FileInputStream(new File(filename));
 		List<Statement> userStatements = parser.parse(is);
-//		
+
 		GCompiler compiler = new GCompiler();
 		List<Statement> program = new LinkedList<>();
 		program.addAll(system);
@@ -45,10 +45,8 @@ public class GVMTest {
 		GVMProgram p = compiler.compile(program);
 		long end = System.currentTimeMillis();
 		System.out.println("> Compilation finished. Took "+(end-start)+"ms");
-		System.out.println("> Started VM.");
-		System.out.println("───────────────────────────────────────────");
 		System.out.println();
-		GVMDebugInfo.displayProgram(p);
+//		GVMDebugInfo.displayProgram(p);
 		GVM vm = new GVM(p);
 		vm.run();
 	}

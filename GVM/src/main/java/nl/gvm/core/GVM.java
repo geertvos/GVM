@@ -156,7 +156,6 @@ public class GVM {
 					//Set the current function pointer
 					int callingFunction = function;
 					function = arg.getValue();
-					System.out.println("Invoking function "+function);
 					GVMFunction fstruct = program.getFunction(function);
 					//Obtain the number of parameters
 					int paramCount = fstruct.getParameters().size() ;
@@ -217,17 +216,14 @@ public class GVM {
 					bytecode.seek(pc);
 					stack.push(v);
 					gc.collect(heap, stack);
-					System.out.println("Returned to function "+function+" stack "+stack);
 				}
 				break;
 			case PUT:
 				{
 					Value toSet = stack.pop();
 					Value value = stack.peek();
-					System.out.println("Setting "+toSet+" to "+value);
 					toSet.setValue(value.getValue());
 					toSet.setType(value.getType());
-					System.out.println(heap);
 				}
 				break;
 			case GET:
@@ -238,7 +234,6 @@ public class GVM {
 						break;
 					}
 					GVMObject vo = heap.get(reference.getValue());
-					System.out.println("Got "+vo);
 					int getarg = bytecode.readInt();
 					stack.push( vo.getValue(getarg) );
 				}
@@ -441,7 +436,7 @@ public class GVM {
 				break;
 			}
 		}
-		System.out.println("VM exited normal");
+		System.out.println("> VM exited normal");
 
 	}
 	

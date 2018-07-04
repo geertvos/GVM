@@ -14,6 +14,3 @@ readLine = function() {
 construct = function() {
 	native("nl.gvm.main.GVMNatives","construct");
 }
-
-print("> Loaded system libs");
-print("───────────────────────────────────────────");
