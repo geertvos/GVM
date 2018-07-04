@@ -49,6 +49,11 @@ public class NativeMethodAutoWrapper extends NativeMethodWrapper{
 					int index = strings.indexOf(strVal);
 					return new Value(index, TYPE.STRING);
 				}
+				if(returnValue instanceof GVMObject) {
+					int index = heap.size();
+					heap.put(index, (GVMObject)returnValue);
+					return new Value(index, TYPE.OBJECT);
+				}
 			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException e) {
 				throw new RuntimeException(e);
 			} catch( InvocationTargetException e2 ) {

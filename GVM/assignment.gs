@@ -1,7 +1,7 @@
 var a = 90;
 var b = 80;
 
-test = function()
+test = function(a)
 {
 	var a1 = 20;
 	var a2 = 30;

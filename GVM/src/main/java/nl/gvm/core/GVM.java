@@ -67,6 +67,7 @@ public class GVM {
 		bytecode.write( LDC_F );
 		bytecode.writeInt(0);
 		bytecode.write( INVOKE );
+		bytecode.writeInt(0);
 		bytecode.write( HALT );
 		bytecode.seek(0);
 
@@ -145,6 +146,7 @@ public class GVM {
 			case INVOKE:
 				{
 					//Pop the function reference
+					int argCount = bytecode.readInt();
 					Value arg = stack.pop();
 					if( arg.getType() != Value.TYPE.FUNCTION ){
 						handleException("Calling a non function: "+arg);
@@ -158,6 +160,10 @@ public class GVM {
 					GVMFunction fstruct = program.getFunction(function);
 					//Obtain the number of parameters
 					int paramCount = fstruct.getParameters().size() ;
+					if(argCount != paramCount) {
+						handleException("Argument count for function "+function+" is "+paramCount+", but only "+argCount+" provided.");
+						break;
+					}
 					
 					//Store them for now
 					Value[] params = new Value[paramCount];
@@ -254,6 +260,20 @@ public class GVM {
 				else if( arg1.getType()==Value.TYPE.STRING && arg2.getType()==Value.TYPE.STRING)
 				{
 					int val = program.addString(program.getString(arg2.getValue())+program.getString(arg1.getValue()));
+					Value returnValue = new Value(val,Value.TYPE.STRING);
+					stack.push(returnValue);
+				}
+				else if( arg1.getType()==Value.TYPE.STRING && arg2.getType()==Value.TYPE.OBJECT)
+				{
+					GVMObject o = heap.get(arg2.getValue());
+					int val = program.addString(o.toString()+program.getString(arg1.getValue()));
+					Value returnValue = new Value(val,Value.TYPE.STRING);
+					stack.push(returnValue);
+				}
+				else if( arg1.getType()==Value.TYPE.OBJECT && arg2.getType()==Value.TYPE.STRING)
+				{
+					GVMObject o = heap.get(arg1.getValue());
+					int val = program.addString(program.getString(arg2.getValue())+o.toString());
 					Value returnValue = new Value(val,Value.TYPE.STRING);
 					stack.push(returnValue);
 				}

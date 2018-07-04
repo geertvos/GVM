@@ -58,10 +58,12 @@ public class FunctionCallExpression extends Expression implements FieldReference
 		} else {
 			field.compile(c);
 		}
+		//TODO: Compile in a parameter count check
 		for( Expression e : parameters )
 			e.compile(c);
 		function.compile(c);
 		c.code.add(GVM.INVOKE);
+		c.code.writeInt(parameters.size());
 	}
 
 }
