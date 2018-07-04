@@ -21,8 +21,8 @@ public class NativeMethodAutoWrapper extends NativeMethodWrapper{
 	@Override
 	public Value invoke(List<Value> arguments, Map<Integer, GVMObject> heap, List<String> strings) {
 		Collections.reverse(arguments);
-		String classname = getStringArgument(0, arguments, strings);
-		String method = getStringArgument(1, arguments, strings);
+		String classname = getStringArgument(0, arguments, strings, heap);
+		String method = getStringArgument(1, arguments, strings, heap);
 			try {
 				Class theClass = Class.forName(classname);
 				Object[] wrappedArgs = null;
@@ -32,7 +32,7 @@ public class NativeMethodAutoWrapper extends NativeMethodWrapper{
 					wrappedArgs = new Object[argcount];
 					wrappedTypes = new Class[argcount];
 					for(int i=2;i<args;i++) {
-						String val = getStringArgument(i, arguments, strings);
+						String val = getStringArgument(i, arguments, strings, heap);
 						wrappedArgs[i-2] = val;
 						wrappedTypes[i-2] = String.class;
 					}
@@ -57,10 +57,20 @@ public class NativeMethodAutoWrapper extends NativeMethodWrapper{
 		return new Value(0,  Value.TYPE.UNDEFINED);
 	}
 	
-	public String getStringArgument(int index, List<Value> arguments, List<String> table) {
+	public String getStringArgument(int index, List<Value> arguments, List<String> table, Map<Integer, GVMObject> heap) {
 		Value v = arguments.get(index);
 		if( v.getType() == Value.TYPE.STRING ) {
 			return table.get(v.getValue());
+		}
+		if( v.getType() == Value.TYPE.NUMBER ) {
+			return String.valueOf(v.getValue());
+		}
+		if( v.getType() == Value.TYPE.OBJECT ) {
+			GVMObject o = heap.get(v.getValue());
+			if( o != null) {
+				return o.toString();
+			}
+			return String.valueOf(null);
 		}
 		throw new IllegalArgumentException("Value is not a STRING, but a "+v.getType());
 	}

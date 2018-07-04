@@ -33,14 +33,14 @@ public class GVMTest {
 		long start = System.currentTimeMillis();
 		GScriptASTRewriter parser = new GScriptASTRewriter();
 		InputStream sys = new FileInputStream(new File("system.gs"));
-		List<Statement> sytem = parser.parse(sys);
+		List<Statement> system = parser.parse(sys);
 
 		InputStream is = new FileInputStream(new File(filename));
 		List<Statement> userStatements = parser.parse(is);
 //		
 		GCompiler compiler = new GCompiler();
 		List<Statement> program = new LinkedList<>();
-//		program.addAll(sytem);
+		program.addAll(system);
 		program.addAll(userStatements);
 		GVMProgram p = compiler.compile(program);
 		long end = System.currentTimeMillis();

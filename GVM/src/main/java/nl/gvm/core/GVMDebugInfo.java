@@ -59,7 +59,6 @@ public class GVMDebugInfo {
 			}
 				break;
 			case GVM.DUP: {
-				int arg = bytecode.readInt();
 				out.println("DUP");
 			}
 				break;

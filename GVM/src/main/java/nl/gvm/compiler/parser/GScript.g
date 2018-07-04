@@ -22,7 +22,7 @@ tokens {
 	BREAKSTATEMENT;
 	RETURNSTATEMENT;
 	VARDEFSTATEMENT;
-	
+	COMMA = ',';
 	EXPRESSION;
 	CONDITIONEXPRESSION;	
 	OREXPRESSION;
@@ -39,6 +39,7 @@ tokens {
 	IDENTIFIER;
 	VARIABLEEXPRESSION;
 	ARGUMENTS;
+	FIELDS;
 	ASSIGNMENTEXPRESSION;
 	NEWEXPRESSION;
 	FUNCTIONCALLEXPRESSION;
@@ -66,7 +67,7 @@ functionExpression
 	;
 	
 formalParameterList
-	: '(' (LT* Identifier (LT* ',' LT* Identifier)*)? LT* ')'
+	: '(' (LT* Identifier (LT* COMMA LT* Identifier)*)? LT* ')'
 	-> ^(PARAMETERS Identifier*)
 	;
 
@@ -144,8 +145,8 @@ breakStatement
 	;
 
 returnStatement
-	: 'return' expression? (LT | ';')
-	-> ^(RETURNSTATEMENT (expression)?)
+	: 'return' expression* (LT | ';')
+	-> ^(RETURNSTATEMENT (expression)*)
 	;
 	
 variableDefinitionStatement
@@ -158,9 +159,15 @@ expression
 	;
 		
 assignmentExpression
-	: fieldReferenceExpression '=' expression
-	-> ^(ASSIGNMENTEXPRESSION fieldReferenceExpression expression)
+	: fields '=' LT* expression
+	-> ^(ASSIGNMENTEXPRESSION fields expression)
 	;
+
+fields
+	: variableExpression ('##' variableExpression)*
+	-> ^(FIELDS variableExpression*)
+	;
+
 
 conditionalExpression
 	: (singleArg=logicalORExpression-> $singleArg) ((LT* '?' LT* expression LT* ':' LT* expression)+ -> ^(CONDITIONEXPRESSION $singleArg expression*))?
@@ -240,11 +247,9 @@ variableExpression
 	-> ^(VARIABLEEXPRESSION Identifier fieldReferenceExpression?)
 	; 
 
-
-	
 	
 arguments
-	: '(' LT* (expression LT*(',' expression LT* )*)?')'
+	: '(' LT* (expression LT*(COMMA expression LT* )*)?')'
 	-> ^(ARGUMENTS expression*)
 	;
 // primitive literal definition.

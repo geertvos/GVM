@@ -3,6 +3,7 @@ package nl.gvm.compiler.parser;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 import java.util.Vector;
@@ -60,7 +61,6 @@ public class GScriptASTRewriter {
 	     CommonTokenStream tokens = new CommonTokenStream(lexer);
 	     GScriptParser parser = new GScriptParser(tokens);
 	     CommonTree t  = (CommonTree) parser.program().getTree();
-	     
 	     if( t.getType() == GScriptLexer.PROGRAM )
 	     {
 	    	 return parseProgram(t);
@@ -156,11 +156,11 @@ public class GScriptASTRewriter {
 		 case GScriptLexer.RETURNSTATEMENT:
 			 if( t.getChildCount()==0)
 				 return new ReturnStatement();
-			 if( t.getChildCount()==1)
-			 {
-				 return new ReturnStatement( parseExpression(t.getChild(0)) );
+			 List<Expression> expressions = new LinkedList<>();
+			 for(int i=0;i<t.getChildCount();i++) {
+				 expressions.add(parseExpression(t.getChild(i)));
 			 }
-			 break;
+			 return new ReturnStatement(expressions);
 		 case GScriptLexer.VARDEFSTATEMENT:
 		 {
 			 if( t.getChildCount() == 1 )
@@ -194,9 +194,13 @@ public class GScriptASTRewriter {
 		 {
 			 if( t.getChildCount() == 2 )
 			 {
-				 Expression fieldReference = parseExpression(t.getChild(0));
+				 List<Expression> variables = new LinkedList<>();
+				 for(int i=0; i<t.getChild(0).getChildCount();i++) {
+					 Expression fieldReference = parseExpression(t.getChild(0).getChild(i));
+					 variables.add(fieldReference);
+				 }
 				 Expression argument = parseExpression(t.getChild(1));
-				 return new AssignmentExpression( fieldReference , argument );
+				 return new AssignmentExpression( variables, argument);
 			 } else {
 				System.out.println("Illegal number of child nodes for assignment expression"); 
 			 }
