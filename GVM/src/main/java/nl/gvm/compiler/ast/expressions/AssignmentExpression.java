@@ -36,7 +36,7 @@ public class AssignmentExpression extends Expression {
 			for(int i=0;i<variables.size();i++) {
 				c.code.add(GVM.DUP);
 				c.code.add(GVM.GET);
-				c.code.writeInt(i);
+				c.code.writeString("field_"+i);
 				variables.get(i).compile(c);
 				c.code.add(GVM.PUT);
 				c.code.add(GVM.POP);

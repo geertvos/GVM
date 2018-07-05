@@ -42,7 +42,7 @@ public class ReturnStatement extends Statement {
 					c.code.add(GVM.LDS);
 					c.code.writeInt(-1);
 					c.code.add(GVM.GET);
-					c.code.writeInt(i);
+					c.code.writeString("field_"+i);
 					c.code.add(GVM.PUT);
 					c.code.add(GVM.POP);
 				}

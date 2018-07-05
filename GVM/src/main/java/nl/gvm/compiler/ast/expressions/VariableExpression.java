@@ -47,7 +47,6 @@ public class VariableExpression extends Expression implements FieldReferenceExpr
 			c.code.writeInt(1+c.getFunction().getParameters().size()+c.getFunction().getLocals().indexOf(name)); 
 		} else {
 			//Variable points to a field of this
-			int index = c.registerVariable(name);
 			if( field!=null )
 				field.compile(c);
 			else {
@@ -55,7 +54,7 @@ public class VariableExpression extends Expression implements FieldReferenceExpr
 				c.code.writeInt(0); //Load this
 			}
 			c.code.add(GVM.GET);
-			c.code.writeInt(index);
+			c.code.writeString(name);
 		}
 	}
 	

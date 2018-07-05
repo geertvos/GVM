@@ -6,3 +6,7 @@ print(o.text);
 if(s == "Geert") {
 	print("Hello master!");
 }
+
+print("Length: "+s.length);
+print("Reference: "+s.ref);
+print("Lowercase: "+s.lowercase);

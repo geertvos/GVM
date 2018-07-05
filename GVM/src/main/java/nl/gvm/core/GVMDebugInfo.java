@@ -99,8 +99,8 @@ public class GVMDebugInfo {
 			}
 				break;
 			case GVM.GET: {
-				int op = bytecode.readInt();
-				out.println("GET "+op);
+				String fieldName = bytecode.readString();
+				out.println("GET "+fieldName);
 			}
 				break;
 			case GVM.HALT: {

@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class GVMPlainObject implements GVMObject {
 
-	private final Map<Integer,Value> data = new HashMap<Integer, Value>();
+	private final Map<String,Value> data = new HashMap<String, Value>();
 	
 	/**
 	 * Set a value in this object
@@ -19,9 +19,9 @@ public class GVMPlainObject implements GVMObject {
 	 * @param v The value, can be a reference to another object.
 	 */
 	@Override
-	public void setValue( int id , Value v )
+	public void setValue( String name , Value v )
 	{
-		data.put(id, v);
+		data.put(name, v);
 	}
 	
 	/**
@@ -30,13 +30,13 @@ public class GVMPlainObject implements GVMObject {
 	 * @return Returns the value as Value object and Undefined if not found.
 	 */
 	@Override
-	public Value getValue( int id )
+	public Value getValue( String name )
 	{
-		if( data.containsKey(id))
-			return data.get(id);
+		if( data.containsKey(name))
+			return data.get(name);
 		else {
 			Value v = new Value(0, Value.TYPE.UNDEFINED);
-			data.put( id , v );
+			data.put( name , v );
 			return v;
 		}
 	}

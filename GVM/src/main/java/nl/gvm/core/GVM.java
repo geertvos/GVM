@@ -171,9 +171,9 @@ public class GVM {
 					
 					Value thisval = stack.pop();
 					//Push state on the stack
-					stack.push( new Value(bytecode.getPointerPosition(), Value.TYPE.NUMBER,"Program counter") );
-					stack.push( new Value(framepointer, Value.TYPE.NUMBER,"Frame pointer") );
-					stack.push( new Value(callingFunction, Value.TYPE.NUMBER,"Calling function") );
+					stack.push( new Value(bytecode.getPointerPosition(), Value.TYPE.NUMBER, "Program counter") );
+					stack.push( new Value(framepointer, Value.TYPE.NUMBER, "Frame pointer") );
+					stack.push( new Value(callingFunction, Value.TYPE.NUMBER, "Calling function") );
 					
 					
 					//Push this and arguments on the stack
@@ -229,13 +229,32 @@ public class GVM {
 			case GET:
 				{
 					Value reference = stack.pop();	//pop value which must be a reference to object
+					String variableName = bytecode.readString();
+					if(variableName.equals("ref")) {
+						int ref = reference.getValue();
+						stack.push(new Value(ref, TYPE.NUMBER));
+						break;
+					}
+					if(reference.getType() == Value.TYPE.STRING) {
+						if(variableName.equals("length")) {
+							String s = program.getString(reference.getValue());
+							stack.push(new Value(s.length(), TYPE.NUMBER));
+							break;
+						}
+						if(variableName.equals("lowercase")) {
+							String s = program.getString(reference.getValue()).toLowerCase();
+							stack.push(new Value(s.length(), TYPE.NUMBER));
+							break;
+						}
+						handleException("String does not support: "+variableName+" at pc: "+bytecode.getPointerPosition()+" f:"+function);
+						break;
+					}
 					if( reference.getType() != Value.TYPE.OBJECT ){
 						handleException("Not a reference to an object: "+reference+" pc: "+bytecode.getPointerPosition()+" f:"+function);
 						break;
 					}
 					GVMObject vo = heap.get(reference.getValue());
-					int getarg = bytecode.readInt();
-					stack.push( vo.getValue(getarg) );
+					stack.push(vo.getValue(variableName) );
 				}
 				break;
 			case HALT:
@@ -250,6 +269,13 @@ public class GVM {
 				if( arg1.getType()==Value.TYPE.NUMBER && arg2.getType()==Value.TYPE.NUMBER)
 				{
 					Value returnValue = new Value(arg1.getValue()+arg2.getValue(),Value.TYPE.NUMBER);
+					stack.push(returnValue);
+				}
+				else if( arg1.getType()==Value.TYPE.NUMBER && arg2.getType()==Value.TYPE.STRING)
+				{
+					String value = program.getString(arg2.getValue())+arg1.getValue();
+					int val = program.addString(value);
+					Value returnValue = new Value(val,Value.TYPE.STRING);
 					stack.push(returnValue);
 				}
 				else if( arg1.getType()==Value.TYPE.STRING && arg2.getType()==Value.TYPE.STRING)
@@ -419,13 +445,13 @@ public class GVM {
 					handleException("Calling a non function: " + arg);
 					break;
 				}
-				NativeMethodWrapper nmw = program.getNativeWrappers().get( arg.getValue() );
+				NativeMethodWrapper wrapper = program.getNativeWrappers().get( arg.getValue() );
 				List<Value> args = new ArrayList<Value>();
-				for( int i=0;i<nmw.argumentCount();i++)
+				for(int i=0; i <wrapper.argumentCount() ; i++)
 					args.add( stack.pop() );
 				try {
-				Value returnVal = nmw.invoke(args ,heap, program.getStringConstants() );
-				stack.push(returnVal);
+					Value returnVal = wrapper.invoke(args ,heap, program.getStringConstants() );
+					stack.push(returnVal);
 				} catch(Exception e) {
 					handleException(e.getMessage());
 				}

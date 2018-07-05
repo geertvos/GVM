@@ -4,9 +4,9 @@ import java.util.Collection;
 
 public interface GVMObject {
 
-	void setValue(int id, Value v);
+	void setValue(String id, Value v);
 
-	Value getValue(int id);
+	Value getValue(String id);
 
 	Collection<Value> getValues();
 

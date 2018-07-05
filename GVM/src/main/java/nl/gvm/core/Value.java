@@ -6,8 +6,8 @@ public class Value {
 		OBJECT,FUNCTION,NUMBER,STRING,BOOLEAN,UNDEFINED;
 	}
 	
-	private int value;
 	private TYPE type;
+	private int value;
 	private String comment;
 	
 	public Value( int value , TYPE type )
