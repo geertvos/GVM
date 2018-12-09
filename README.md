@@ -23,10 +23,39 @@ The source code of this project was written by Geert Vos around 2009. It was red
 mvn clean install
 
 java -jar ./target/gvm-0.0.1-SNAPSHOT-jar-with-dependencies.jar <file>
-  
+
+### Code examples ###
+The GVM runs GScript, a minimal Javascrip like language that looks like this:
+
+```
+print("Hello World!");
+for( var i=0;i<1000000;i=i+1)
+{
+	print(i);
+}
+```
+
+Object Oriented functional programming is supported, for each static function call a new object is created that represents the current this, this can be returned and so the function becomes a constructor.
+```
+var MyObject = function() {
+ get = function() { return "GET" }
+ return this;
+}
+var object = new MyObject();
+print(object.get());
+```
+
+There is support for calling native Java methods from the scripting context.
+```
+myFunction = function(text) {
+	native("nl.gvm.myfunctions.MyClass","myFunction",text);
+	return;
+}
+var returnValue = myFucntion("input");
+```
+
 ### To be supported: ###
 * Named return values
-* Full static method wrapping
 * Full native object wrapping
 * Multi threading
 
