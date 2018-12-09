@@ -32,14 +32,25 @@ public class NativeMethodAutoWrapper extends NativeMethodWrapper{
 					wrappedArgs = new Object[argcount];
 					wrappedTypes = new Class[argcount];
 					for(int i=2;i<args;i++) {
-						String val = getStringArgument(i, arguments, strings, heap);
-						wrappedArgs[i-2] = val;
-						wrappedTypes[i-2] = String.class;
+						TYPE type = arguments.get(i).getType();
+						if(type == TYPE.STRING) {
+							String val = getStringArgument(i, arguments, strings, heap);
+							wrappedArgs[i-2] = val;
+							wrappedTypes[i-2] = String.class;
+						} else if(type == TYPE.NUMBER) {
+							Integer val = arguments.get(i).getValue();
+							wrappedArgs[i-2] = val;
+							wrappedTypes[i-2] = Integer.class;
+						} else if(type == TYPE.BOOLEAN) {
+							Boolean val = arguments.get(i).getValue() > 0;
+							wrappedArgs[i-2] = val;
+							wrappedTypes[i-2] = Boolean.class;
+						} else {
+							throw new RuntimeException("Argument type "+type+" not supported.");
+						}
 					}
 				}
 				Method m = theClass.getMethod(method, wrappedTypes);
-				//TODO: wrap other arguments
-				//TODO: wrap return values of other types
 				Object returnValue = m.invoke(null, wrappedArgs );
 				if(returnValue instanceof String) {
 					String strVal = (String)returnValue;
@@ -49,7 +60,13 @@ public class NativeMethodAutoWrapper extends NativeMethodWrapper{
 					int index = strings.indexOf(strVal);
 					return new Value(index, TYPE.STRING);
 				}
-				if(returnValue instanceof GVMObject) {
+				else if(returnValue instanceof Integer) {
+					return new Value(((Integer)returnValue), TYPE.NUMBER);
+				}
+				else if(returnValue instanceof Boolean) {
+					return new Value(((Boolean)returnValue)?1:0, TYPE.BOOLEAN);
+				}
+				else if(returnValue instanceof GVMObject) {
 					int index = heap.size();
 					heap.put(index, (GVMObject)returnValue);
 					return new Value(index, TYPE.OBJECT);

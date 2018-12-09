@@ -6,7 +6,7 @@ import nl.gvm.core.GVM;
 
 public class ExpressionStatement extends Statement {
 
-	private Expression expression;
+	private final Expression expression;
 	
 	public ExpressionStatement( Expression e )
 	{

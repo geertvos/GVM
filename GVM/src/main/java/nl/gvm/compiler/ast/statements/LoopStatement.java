@@ -1,12 +1,13 @@
 package nl.gvm.compiler.ast.statements;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
 public abstract class LoopStatement extends Statement {
 
-	protected List<JumpStatement> breaks = new Vector<JumpStatement>();
-	protected List<JumpStatement> continues = new Vector<JumpStatement>();
+	protected final List<JumpStatement> breaks = new LinkedList<JumpStatement>();
+	protected final List<JumpStatement> continues = new LinkedList<JumpStatement>();
 	
 	public void addBreak( JumpStatement b )
 	{

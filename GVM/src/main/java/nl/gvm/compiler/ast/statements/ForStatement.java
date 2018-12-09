@@ -6,12 +6,12 @@ import nl.gvm.core.GVM;
 
 public class ForStatement extends LoopStatement {
 
-	private Expression condition;
-	private Statement initstatement;
-	private Statement updatestatement;
+	private final Expression condition;
+	private final Statement initstatement;
+	private final Statement updatestatement;
 	private Statement loopstatement;
 
-	public ForStatement(  Statement init , Expression condition , Statement update )
+	public ForStatement( Statement init , Expression condition , Statement update )
 	{
 		this.initstatement = init;
 		this.condition = condition;

@@ -5,9 +5,9 @@ import nl.gvm.core.GVM;
 
 public class TryCatchBlock extends Statement {
 
-	private Statement tryBlock;
-	private Statement catchBlock;
-	private String variableName;
+	private final Statement tryBlock;
+	private final Statement catchBlock;
+	private final String variableName;
 	
 	public TryCatchBlock( Statement tryBlock , String variableName , Statement catchBlock )
 	{

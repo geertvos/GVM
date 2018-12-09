@@ -160,7 +160,7 @@ public class GVM {
 					//Obtain the number of parameters
 					int paramCount = fstruct.getParameters().size() ;
 					if(argCount != paramCount) {
-						handleException("Argument count for function "+function+" is "+paramCount+", but only "+argCount+" provided.");
+						handleException("Argument count for function "+function+" is "+paramCount+", but "+argCount+" provided.");
 						break;
 					}
 					

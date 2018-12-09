@@ -1,6 +1,7 @@
 package nl.gvm.compiler;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
@@ -21,16 +22,17 @@ public class GCompiler {
 
 	private List<String> stringConstants = new ArrayList<>();
 	private List<String> varNamesConstants = new ArrayList<>();
+	public List<NativeMethodWrapper> natives = new ArrayList<>();
+
 	public RandomAccessByteStream code;
 	private GVMFunction function;
 	private GVMProgram program;
-	public List<NativeMethodWrapper> natives = new ArrayList<>();
 	
 	public GVMProgram compile(List<Statement> compilables)
 	{
 		program = new GVMProgram("demo");
 		code = new RandomAccessByteStream();
-		function = new GVMFunction(code, new Vector<String>());
+		function = new GVMFunction(code, new ArrayList<String>());
 		program.addFunction(function);
 		
 		code.add(GVM.NEW); //Init main function
