@@ -38,8 +38,8 @@ for( var i=0;i<1000000;i=i+1)
 Object Oriented functional programming is supported, for each static function call a new object is created that represents the current this, this can be returned and so the function becomes a constructor.
 ```
 var MyObject = function() {
- get = function() { return "GET" }
- return this;
+	get = function() { return "GET" }
+	return this;
 }
 var object = new MyObject();
 print(object.get());
