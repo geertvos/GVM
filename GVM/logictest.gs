@@ -3,7 +3,7 @@ assertFail = function(msg) {
 	native("nl.gvm.test.Assertions","fail", msg);
 }
 
-print("This test shows if all basic arithmatic works,");
+print("This is a funky unit test that uses the GVM to test the GVM.");
 
 var test = function(expression, message) {
 	if (expression) {
