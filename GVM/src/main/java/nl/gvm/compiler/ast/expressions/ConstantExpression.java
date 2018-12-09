@@ -20,7 +20,7 @@ public class ConstantExpression extends Expression {
 	public ConstantExpression( String s )
 	{
 		this.string = s;
-		type = Value.TYPE.STRING;
+		this.type = Value.TYPE.STRING;
 	}
 
 	public ConstantExpression()
@@ -35,28 +35,28 @@ public class ConstantExpression extends Expression {
 			c.code.add( GVM.LDC_B);
 			c.code.write( (byte)value );
 		}
-		if (type == Value.TYPE.NUMBER) 
+		else if (type == Value.TYPE.NUMBER) 
 		{
 			c.code.add( GVM.LDC_N);
 			c.code.writeInt(value);
 		}
-		if (type == Value.TYPE.FUNCTION) 
+		else if (type == Value.TYPE.FUNCTION) 
 		{
 			c.code.add( GVM.LDC_F);
 			c.code.writeInt(value);
 		}
-		if (type == Value.TYPE.STRING)
+		else if (type == Value.TYPE.STRING)
 		{
 			c.code.add( GVM.LDC_S);
-			c.code.writeInt( c.registerString(string));
+			c.code.writeInt( c.registerString(string) );
 			return;
 		}
-		if (type == Value.TYPE.UNDEFINED)
+		else if (type == Value.TYPE.UNDEFINED)
 		{
 			c.code.add( GVM.LDC_U);
 			return;
 		}
-		if (type == Value.TYPE.OBJECT)
+		else if (type == Value.TYPE.OBJECT)
 		{
 			c.code.add( GVM.NEW);
 			return;

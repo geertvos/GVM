@@ -19,18 +19,8 @@ public class NativeFunctionCallExpression extends Expression {
 		this.parameters = parameters;
 	}
 	
-	public NativeFunctionCallExpression( int identifier , List<Expression> parameters ) {
-		this.identifier = identifier;
-		this.parameters = parameters;
-	}
-	
-	public NativeFunctionCallExpression(int identifier) {
-		this.identifier = identifier;
-	}
-
 	@Override
 	public void compile(GCompiler c) {
-		
 		if( method!= null ) {
 			if( !c.natives.contains(method)) {
 				c.natives.add(method);

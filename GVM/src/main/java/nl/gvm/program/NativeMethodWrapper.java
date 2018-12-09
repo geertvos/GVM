@@ -14,6 +14,7 @@ import nl.gvm.core.Value;
 public abstract class NativeMethodWrapper {
 
 	public abstract Value invoke( List<Value> arguments, Map<Integer,GVMObject> heap,List<String> strings );
+	
 	public abstract int argumentCount();
 	
 }
