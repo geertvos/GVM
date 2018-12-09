@@ -71,10 +71,8 @@ public class NativeMethodAutoWrapper extends NativeMethodWrapper{
 					heap.put(index, (GVMObject)returnValue);
 					return new Value(index, TYPE.OBJECT);
 				}
-			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException e) {
+			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException e | InvocationTargetException e2) {
 				throw new RuntimeException(e);
-			} catch( InvocationTargetException e2 ) {
-				throw new RuntimeException(e2.getTargetException());
 			}
 		return new Value(0,  Value.TYPE.UNDEFINED);
 	}
