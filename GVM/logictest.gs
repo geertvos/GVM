@@ -28,11 +28,12 @@ test( 3-1==2 , "operator -");
 test( 2*2==4 , "operator *");
 test( 2*2-1==3 , "operator precedence");
 test( "a"=="a" , "operator ==");
-test( "a"+"b"=="ab" , "String String concat ");
+test( "a"+"b"=="ab" , "String String concat");
 test( "a"+1 == "a1" , "String Number concat");
+test( 1+"a" == "1a" , "Number String concat");
 
 //To be implemented
-//test( "a"+true == "atrue" , "String Number concat");
+//test( "a"+true == "atrue" , "String Boolean concat");
 
 try {
  	var s = 1/0;

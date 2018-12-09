@@ -278,6 +278,13 @@ public class GVM {
 					Value returnValue = new Value(val,Value.TYPE.STRING);
 					stack.push(returnValue);
 				}
+				else if( arg1.getType()==Value.TYPE.STRING && arg2.getType()==Value.TYPE.NUMBER)
+				{
+					String value = arg2.getValue() + program.getString(arg1.getValue());
+					int val = program.addString(value);
+					Value returnValue = new Value(val,Value.TYPE.STRING);
+					stack.push(returnValue);
+				}
 				else if( arg1.getType()==Value.TYPE.STRING && arg2.getType()==Value.TYPE.STRING)
 				{
 					int val = program.addString(program.getString(arg2.getValue())+program.getString(arg1.getValue()));
