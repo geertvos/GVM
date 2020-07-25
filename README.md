@@ -1,8 +1,8 @@
-### GScript VM ###
+### GVM ###
 
-This is a very minimal compiler and interpreter for a Javascript like functional programming language that is called GScript. 
+The GVM is a small and efficient virtual machine that executes the GVM bytecode language. It is a stack based architecture.
 
-The compiler and VM are fully written in Java and provide a working programming language and execution environment.
+The compiler and VM are fully written in Java and as a separate project, a fully working programming language is provided for educational purposes. See https://github.com/geertvos/gs-lang
 
 ### History ###
 The source code of this project was written by Geert Vos around 2009. It was rediscovered later and imported into this GitHub repo.  
